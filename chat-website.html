@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Responsive Chat Interface</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3f3f3;
+        }
+        .challenge{
+            display: flex;
+        }
+        /* Chat Container */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 500px;
+            height: 90vh;
+            background-color: white;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .chat-header {
+            padding: 15px;
+            background-color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Messages Area */
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            background-color: #f9f9f9;
+            overflow-y: auto;
+        }
+
+        /* Single Message */
+        .message {
+            max-width: 70%;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            position: relative;
+            font-size: 14px;
+        }
+
+        .message.sent {
+            background-color: #c2f5ff;
+            margin-left: auto;
+            text-align: right;            
+            border-bottom-right-radius: 0px;
+        }
+
+        .message.received {
+            background-color: #d4edda;
+            margin-right: auto;
+            text-align: left;
+            border-bottom-left-radius: 0px;
+        }
+
+        /* Timestamp */
+        .message::after {
+            content: attr(data-time);
+            display: block;
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* Input Area */
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #ffffff;
+            border-top: 1px solid #eee;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+        }
+
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            /*background-color: #007bff;*/
+            background-color: white ;
+            color: blue;
+            border: none;
+            padding: 0 20px;
+            margin-left: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 768px) {
+            .chat-container {
+                max-width: 700px;
+                height: 80vh;
+            }
+        }
+        .redbx{
+            height: 80vh;
+            width: 200px;
+            background-color: red;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="challenge">
+        <div class="redbx"></div>
+        <div class="chat-container">
+            <div class="chat-header">Your Registration Number</div>
+            <div class="chat-messages">
+                <div class="message received" data-time="02:58 PM">This is a received message</div>
+                <div class="message sent" data-time="02:59 PM">This is a sent message</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message..." class="bddr">
+                <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const inputField = document.querySelector('.chat-input input[type="text"]');
+            const messageText = inputField.value;
+            const chatMessages = document.querySelector('.chat-messages');
+
+            if (messageText.trim() !== "") {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'sent');
+                const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                messageElement.setAttribute('data-time', currentTime);
+                messageElement.textContent = messageText;
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                inputField.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
